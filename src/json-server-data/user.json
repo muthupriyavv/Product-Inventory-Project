@@ -1,0 +1,32 @@
+{
+  "users": [
+    {
+      "email": "muthupriyavv@gmail.com",
+      "username": "priya",
+      "contact": "9750044551",
+      "password": "july",
+      "id": 1
+    },
+    {
+      "email": "muthulakshmanv@gmail.com",
+      "username": "muthu",
+      "contact": "9750044551",
+      "password": "aaa",
+      "id": 2
+    },
+    {
+      "email": "test@gmail.com",
+      "username": "aaa",
+      "contact": "975004451",
+      "password": "aaa",
+      "id": 3
+    },
+    {
+      "email": "priya@gmail.com",
+      "username": "priya",
+      "contact": "9750044551",
+      "password": "july",
+      "id": 4
+    }
+  ]
+}

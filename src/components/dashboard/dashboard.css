@@ -1,0 +1,42 @@
+.dashboardContainer{
+  margin-left: 400px;
+  width:600px;
+  height: auto;
+  align-items: center;
+}
+
+.inputCategory input[type=text] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+.inputCategoryinput[type=text]:focus{
+  background-color: #ddd;
+  outline: none;
+}
+
+.addCategory {
+  background-color:dodgerblue;
+  color: white;
+  padding: 10px;
+  margin: 8px 0;
+  margin-left: 50px; 
+  border: none;
+  cursor: pointer;
+  width: 20%;
+  opacity: 0.9;
+  
+}
+
+.addCategory:hover {
+  opacity: 1;
+}
+
+.inputCategory::placeholder{
+  font-size: 16px;
+  color: black;
+}

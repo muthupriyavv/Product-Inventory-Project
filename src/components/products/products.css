@@ -1,0 +1,51 @@
+.addsearchContainer{
+  margin:40px 10px;
+}
+
+
+.col-25 {
+  float: left;
+  width: 25%;
+}
+
+.col-50 {
+  float: left;
+  width: 50%;
+}
+
+.col-75 {
+  float: left;
+  width: 75%;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.col-50  .searchBox {
+  margin-left:100px;
+  border: 1px solid grey;
+  background-color: white;
+}
+
+.col-50 .searchBox:focus{
+  background-color: white;
+}
+
+.productAdd {
+    background-color: #00cc99; /* Green */
+    border: none;
+    color: white;
+    padding: 16px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin-left:300px;
+    font-size: 16px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  }

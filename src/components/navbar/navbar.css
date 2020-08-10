@@ -1,0 +1,49 @@
+
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
+
+body {font-family: Arial, Helvetica, sans-serif;}
+
+.navbarReact  {
+  width: 100%;
+  background-color: #555;
+  overflow: auto;
+}
+
+.navbarReact .link {
+  float: left;
+  padding: 12px;
+  color: white;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.navbarReact .rightlink{
+    float: right;
+    padding: 12px;
+    color: white;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.navbarReact .link:hover {
+  background-color: #000;
+}
+
+.navbarReact .rightlink:hover {
+    background-color: #000;
+  }
+
+.active {
+  background-color: #4CAF50;
+}
+
+@media screen and (max-width: 500px) {
+    .link {
+      float: none;
+      display: block;
+    }
+    .rightlink {
+        float: none;
+        display: block;
+      }
+}

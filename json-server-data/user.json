@@ -1,0 +1,40 @@
+{
+  "users": [
+    {
+      "email": "priya@gmail.com",
+      "username": "priya",
+      "password": "july",
+      "pswrepeat": "july",
+      "contact": "9750044551"
+    },
+    {
+      "id": "1",
+      "email": "nans@gmail.com",
+      "username": "nandhini",
+      "password": "12345",
+      "pswrepeat": "12345",
+      "contact": "995274728"
+    },
+    {
+      "email": "muthupriyavv@gmail.com",
+      "username": "priya",
+      "contact": "9750044551",
+      "password": "123",
+      "id": "JSaeOGT"
+    },
+    {
+      "email": "muthupriyavv@gmail.com",
+      "username": "aaaa",
+      "contact": "9750044551",
+      "password": "july1997",
+      "id": "xULIyb9"
+    },
+    {
+      "email": "muthupriyavv@gmail.com",
+      "username": "aaaa",
+      "contact": "9750044551",
+      "password": "july1997",
+      "id": "n4wPR68"
+    }
+  ]
+}
