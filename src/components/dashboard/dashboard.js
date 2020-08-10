@@ -1,6 +1,7 @@
 import React from 'react';
 import './dashboard.css';
 import axios from 'axios';
+import { Chart } from "react-google-charts";
 
 class Dashboard extends React.Component {
 
@@ -48,6 +49,35 @@ class Dashboard extends React.Component {
                             <button type="button" className="addCategory" onClick={this.addCategory}>Add</button>
                         </div>
                     </div>
+                </div>
+                <div style={{ display: 'flex' , marginLeft:"100px"}}>
+                    <Chart
+                        width={'500px'}
+                        height={'300px'}
+                        chartType="BarChart"
+                        loader={<div>Loading Chart</div>}
+                        data={[
+                            ['Brands', 'Quantity'],
+                            ['Samsung', 1000],
+                            ['Vivo',2000],
+                            ['Hp',6000],
+                            ['Dell',3000],
+                            ['Lenovo',1000],
+                        ]}
+                        options={{
+                            title: 'Product Stock',
+                            chartArea: { width: '50%' },
+                            hAxis: {
+                                title: 'Total Stock',
+                                minValue: 0,
+                            },
+                            vAxis: {
+                                title: 'Brand',
+                            },
+                        }}
+                        // For tests
+                        rootProps={{ 'data-testid': '1' }}
+                    />
                 </div>
             </div>
         )

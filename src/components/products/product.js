@@ -42,9 +42,8 @@ class Product extends React.Component {
         let filteredProducts = this.state.productList
         filteredProducts = filteredProducts.filter((products) => {
             let productName = products.name.toLowerCase()
-            console.log(productName)
-            return productName.includes(
-                searchText.toLowerCase())
+            if(productName.indexOf(searchText.toLowerCase()) !== -1)
+            return filteredProducts
         })
         this.setState({
             productList: filteredProducts
