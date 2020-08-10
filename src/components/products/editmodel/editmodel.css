@@ -1,10 +1,12 @@
 
-  .editContainer {
-    border-radius: 5px;
-    margin:30px 250px;
-    background-color: white;
-    padding: 20px;
+  .editproductContainer {
+      margin: auto;
+  }
+  .editproductform{
+    margin: auto;
+    width: 50%;
     height:auto;
+    padding: 20px;
   }
   .editproductform input[type=text], select {
     width: 100%;
@@ -14,7 +16,6 @@
     background-color: #E8E8E8;
     resize: vertical;
   }
-  
   
   .editproduct {
     background-color: #4CAF50;
@@ -29,21 +30,8 @@
   .editproduct:hover {
     background-color: #45a049;
   }
-  
-  
-  .col-25 {
-    float: left;
-    width: 25%;
-    margin-top: 6px;
-  }
-  
-  .col-75 {
-    float: left;
-    width: 75%;
-    margin-top: 6px;
-  }
-  
-  .col-50 {
+    
+  .column-50 {
     float: left;
     width: 50%;
     margin-top: 6px;
@@ -60,8 +48,7 @@
     height:300px;
     object-fit: cover;
   }
-  
-  
+    
   .row:after {
     content: "";
     display: table;
@@ -74,8 +61,14 @@
   
   
   @media screen and (max-width: 600px) {
-    .col-25, .col-75 , .col-50, input[type=submit] {
+    .column-50, input[type=submit] {
       width: 100%;
       margin-top: 0;
+    }
+    .editproductContainer{
+      width:100%;
+    }
+    .editproductform{
+      width: fit-content;
     }
   }

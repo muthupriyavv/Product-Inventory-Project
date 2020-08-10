@@ -39,26 +39,26 @@ class DisplayProduct extends React.Component {
     render() {
         const productDetails = this.props.productList.map((product) => {
             return (
-                    <div className="card" key={product.id}>
-                        <div className="imageholder">
-                          <img src={product.image} alt="" className="image"/>
-                          </div>
-                        <div className="textContainer">
-                            <h4><b>{product.name}</b></h4>
-                            <span>
-                                <p><b>Price:</b>{product.price}</p>
-                                <p><b>Quantity:</b>{product.quantity}</p>
-                            </span>
-                            <span>
-                                <Link to={{
-                                    pathname: `/products/editproduct/${product.id}`
-                                }}>
-                                    <button className="button editbutton">EDIT</button>
-                                </Link>
-                                <button className="button deletebutton" onClick={() => this.deleteProduct(product.id)}>DELETE</button>
-                            </span>
-                        </div>
+                <div className="card" key={product.id}>
+                    <div className="imageholder">
+                        <img src={product.image} alt="" className="image" />
                     </div>
+                    <div className="textContainer">
+                        <h4><b>{product.name}</b></h4>
+                        <span>
+                            <p><b>Price:</b>{product.price}</p>
+                            <p><b>Quantity:</b>{product.quantity}</p>
+                        </span>
+                        <span>
+                            <Link to={{
+                                pathname: `/products/editproduct/${product.id}`
+                            }}>
+                                <button className="button editbutton">EDIT</button>
+                            </Link>
+                            <button className="button deletebutton" onClick={() => this.deleteProduct(product.id)}>DELETE</button>
+                        </span>
+                    </div>
+                </div>
 
             )
         })

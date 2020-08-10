@@ -37,7 +37,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
   background-color: #4CAF50;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 600) {
     .link {
       float: none;
       display: block;
@@ -45,5 +45,11 @@ body {font-family: Arial, Helvetica, sans-serif;}
     .rightlink {
         float: none;
         display: block;
-      }
+    }
+}
+
+@media screen and (max-width: 300){
+  .navbarReact{
+    width:100%
+  }
 }

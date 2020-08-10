@@ -52,7 +52,7 @@ class Login extends React.Component {
         if (this.state.email !== undefined) {
             let lastAtPos = this.state.email.lastIndexOf('@');
             let lastDotPos = this.state.email.lastIndexOf('.');
-            if (!(lastAtPos < lastDotPos && lastAtPos > 0 && this.state.email.indexOf('@@') == -1 && lastDotPos > 2 && (this.state.email.length - lastDotPos) > 2)) {
+            if (!(lastAtPos < lastDotPos && lastAtPos > 0 && this.state.email.indexOf('@@') === -1 && lastDotPos > 2 && (this.state.email.length - lastDotPos) > 2)) {
                 emailError = "Email is Invalid"
             }
         }
@@ -96,7 +96,6 @@ class Login extends React.Component {
         return (
             <div className="loginBackdrop">
                 <form className="loginContainer">
-
                     <h1 style={{ textAlign: "center" }}>Login</h1>
                     <hr></hr>
                     <label><b>Email</b></label>
@@ -125,7 +124,7 @@ class Login extends React.Component {
                             className="signinbtn">LOGIN</button>
                         <br>
                         </br>
-                        <div className="link">
+                        <div className="signuplink">
                             <Link to="/signup">New User? Sign Up</Link>
                         </div>
                     </div>

@@ -81,7 +81,6 @@ class AddProduct extends React.Component {
             priceError="Price is required"
         }
         if(this.state.price !== undefined){
-            var pattern = new RegExp(/^[0-9\b]+$/)
             if(!pattern.test(this.state.price)){
                 priceError="enter number"
             }
@@ -135,7 +134,7 @@ class AddProduct extends React.Component {
             return <option key={category.id}>{category.categoryname}</option>
         })
         return (
-            <div className="addContainer">
+            <div className="addproductContainer">
                 <form className="addproductform">
                     <div className="row">
                         <div className="col-50">
@@ -188,7 +187,7 @@ class AddProduct extends React.Component {
                         </div>
                     </div>
                     <br></br>
-                    <div class="row">
+                    <div className="row">
                         <button type="submit" className="addproduct" onClick={this.handleSubmit}>ADD</button>
                     </div>
                 </form>

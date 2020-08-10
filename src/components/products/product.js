@@ -11,7 +11,7 @@ class Product extends React.Component {
         this.state = {
             clicked: false,
             productList: [],
-            filterList:[],
+            filterList: [],
             searchText: ''
         }
         this.getAllProducts = this.getAllProducts.bind(this)
@@ -24,7 +24,7 @@ class Product extends React.Component {
         await axios.get("http://localhost:3002/products").then((responseData) => {
             this.setState({
                 productList: responseData.data,
-                filterList:responseData.data
+                filterList: responseData.data
             })
         })
     }
@@ -35,52 +35,44 @@ class Product extends React.Component {
 
     handleSearch(e) {
         if (e.target.value === "") {
-          this.setState({
-            productList: this.state.filterList
-          })
+            this.setState({
+                productList: this.state.filterList
+            })
         }
         else {
-          this.setState({
-            searchText: e.target.value
-          }, () => {
-            this.filterProducts(this.state.searchText)
-          })
+            this.setState({
+                searchText: e.target.value
+            }, () => {
+                this.filterProducts(this.state.searchText)
+            })
         }
-      }
-      filterProducts(searchText) {
+    }
+    filterProducts(searchText) {
         let filteredProducts = this.state.productList
         filteredProducts = filteredProducts.filter((products) => {
-          let productName = products.name.toLowerCase()
-          if (productName.includes(searchText.toLowerCase()))
-            return products
+            let productName = products.name.toLowerCase()
+            if (productName.includes(searchText.toLowerCase()))
+                return products
         })
         this.setState({
-          productList: filteredProducts
+            productList: filteredProducts
         })
-      }
+    }
 
 
     render() {
         return (
-            <div>
+            <div className="productContainer">
                 <div className="addsearchContainer">
-                    <div className="row">
-                        <div className="col-50">
-                            <input
-                                type="text"
-                                placeholder="Search"
-                                name="search"
-                                className="searchBox"
-                                autoComplete="off"
-                                onChange={this.handleSearch}
-                            />
-                        </div>
-                        <div className="col-50">
-                            <button className="productAdd" onClick={this.onAddClicked}>ADD PRODUCT</button>
-                        </div>
-                    </div>
+                    <input
+                        type="text"
+                        placeholder="Search by Name"
+                        name="search"
+                        autoComplete="off"
+                        onChange={this.handleSearch}
+                    />
+                    <button type="button" onClick={this.onAddClicked}>ADD PRODUCT</button>
                 </div>
-                <br></br>
                 <DisplayProduct
                     productList={this.state.productList}
                     getAllProducts={this.getAllProducts}

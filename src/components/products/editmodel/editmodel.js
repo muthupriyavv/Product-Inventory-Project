@@ -8,11 +8,17 @@ class EditModel extends React.Component {
         this.state = {
             id: this.props.match.params.id,
             name: '',
-            price: '' ,
-            category: '',
+            nameError:'',
             quantity: '',
-            brand:'',
-            image: '' ,
+            quantityError:'',
+            price: '',
+            priceError:'',
+            category: '',
+            categoryError:'',
+            brand: '',
+            brandError:'',
+            image: '',
+            imageError:'',
             categoryList: []
         }
         this.handleChange = this.handleChange.bind(this)
@@ -51,9 +57,60 @@ class EditModel extends React.Component {
         })
     }
 
+    validate(){
+        let nameError='';
+        let quantityError='';
+        let priceError='';
+        let brandError='';
+        let imageError='';
+        let categoryError='';
+
+        if(!this.state.name){
+            nameError="Name is required"
+        }
+        if(!this.state.quantity){
+            quantityError="Quantity is required"
+        }
+        
+        if(this.state.quantity !== undefined){
+            var pattern = new RegExp(/^[0-9\b]+$/)
+            if(!pattern.test(this.state.quantity)){
+                quantityError="enter number"
+            }
+        }
+        
+        if(!this.state.price){
+            priceError="Price is required"
+        }
+        if(this.state.price !== undefined){
+            if(!pattern.test(this.state.price)){
+                priceError="enter number"
+            }
+        }
+        if(!this.state.brand){
+            brandError="Brand is required"
+        }
+        if(!this.state.category){
+            categoryError="Category is required"
+        }
+        
+        if(!this.state.image){
+            imageError="Image is required"
+        }
+
+        if (nameError || imageError || quantityError || priceError || brandError || categoryError) {
+            this.setState({ nameError, imageError ,quantityError,priceError,categoryError,brandError })
+            return false;
+        }
+
+        return true;
+    }
+
 
     async handleSave(event) {
         event.preventDefault()
+        const isValid = this.validate()
+        if(isValid){
         const updatedProduct = {
             name: this.state.name,
             price: this.state.price,
@@ -66,6 +123,7 @@ class EditModel extends React.Component {
             console.log(responseData)
         })
         this.props.history.push('/products')
+    }
     }
 
     imageHandler(e){
@@ -95,16 +153,17 @@ class EditModel extends React.Component {
             return <option value={category.categoryname} key={category.id}>{category.categoryname}</option>
         })
         return (
-            <div className="editContainer">
+            <div className="editproductContainer">
                 <form className="editproductform">
                     <div className="row">
-                        <div className="col-50">
+                        <div className="column-50">
                             <div className="img-holder">
                                 <img src={this.state.image} className="img" alt="" />
                             </div>
                             <input type="file" name="image" accept="image/*" onChange={this.imageHandler} />
+                            <p style={{ fontSize: "12", color: 'red' }}>{this.state.imageError}</p>
                         </div>
-                        <div className="col-50">
+                        <div className="column-50">
                             <input
                                 type="text"
                                 name="name"
@@ -112,6 +171,7 @@ class EditModel extends React.Component {
                                 defaultValue={this.state.name}
                                 onChange={this.handleChange}
                             />
+                             <p style={{ fontSize: "12", color: 'red' }}>{this.state.nameError}</p>
                             <input
                                 type="text"
                                 name="price"
@@ -119,6 +179,7 @@ class EditModel extends React.Component {
                                 onChange={this.handleChange}
                                 defaultValue={this.state.price}
                             />
+                             <p style={{ fontSize: "12", color: 'red' }}>{this.state.priceError}</p>
                             <input
                                 type="text"
                                 name="brand"
@@ -126,6 +187,7 @@ class EditModel extends React.Component {
                                 onChange={this.handleChange}
                                 defaultValue={this.state.brand}
                             />
+                             <p style={{ fontSize: "12", color: 'red' }}>{this.state.brandError}</p>
                             <input
                                 type="text"
                                 name="quantity"
@@ -133,10 +195,12 @@ class EditModel extends React.Component {
                                 onChange={this.handleChange}
                                 defaultValue={this.state.quantity}
                             />
+                             <p style={{ fontSize: "12", color: 'red' }}>{this.state.quantityError}</p>
                             <select name="category" value={this.state.category} onChange={this.handleChange}>
                                 <option value="default">CHOOSE A CATEGORY</option>
                                 {categoryOption}
                             </select>
+                            <p style={{ fontSize: "12", color: 'red' }}>{this.state.categoryError}</p>
                         </div>
                     </div>
                     <br></br>
