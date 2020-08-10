@@ -11,6 +11,7 @@ class Product extends React.Component {
         this.state = {
             clicked: false,
             productList: [],
+            filterList:[],
             searchText: ''
         }
         this.getAllProducts = this.getAllProducts.bind(this)
@@ -22,7 +23,8 @@ class Product extends React.Component {
     async getAllProducts() {
         await axios.get("http://localhost:3002/products").then((responseData) => {
             this.setState({
-                productList: responseData.data
+                productList: responseData.data,
+                filterList:responseData.data
             })
         })
     }
@@ -32,23 +34,30 @@ class Product extends React.Component {
     }
 
     handleSearch(e) {
-        this.setState({
+        if (e.target.value === "") {
+          this.setState({
+            productList: this.state.filterList
+          })
+        }
+        else {
+          this.setState({
             searchText: e.target.value
-        })
-        this.filterProducts(this.state.searchText)
-    }
-
-    filterProducts(searchText) {
+          }, () => {
+            this.filterProducts(this.state.searchText)
+          })
+        }
+      }
+      filterProducts(searchText) {
         let filteredProducts = this.state.productList
         filteredProducts = filteredProducts.filter((products) => {
-            let productName = products.name.toLowerCase()
-            if(productName.indexOf(searchText.toLowerCase()) !== -1)
-            return filteredProducts
+          let productName = products.name.toLowerCase()
+          if (productName.includes(searchText.toLowerCase()))
+            return products
         })
         this.setState({
-            productList: filteredProducts
+          productList: filteredProducts
         })
-    }
+      }
 
 
     render() {
