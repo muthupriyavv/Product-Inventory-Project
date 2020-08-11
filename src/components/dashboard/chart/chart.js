@@ -61,6 +61,7 @@ class Chart extends React.Component {
         return (
             <div className="mainChartContainer">
                 <select name="categoryselected" onChange={this.setCategory}>
+                    <option value="default">CHOOSE A CATEGORY</option>
                     {categoryOption}
                 </select>
                 <Bar
