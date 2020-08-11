@@ -20,9 +20,11 @@ class Dashboard extends React.Component {
             [e.target.name]: e.target.value
         })
     }
+    
 
 
-    addCategory() {
+    addCategory(e) {
+        e.preventDefault();
         const category = {
             categoryname: this.state.categoryname
         }
@@ -30,6 +32,7 @@ class Dashboard extends React.Component {
             console.log(responseData);
             alert('category added')
         })
+        
     }
 
     render() {
