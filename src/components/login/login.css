@@ -2,12 +2,12 @@ body {font-family: Arial, Helvetica, sans-serif;}
 * {box-sizing: border-box;}
 
 
-.loginContainer input[type=email], input[type=password] {
+.loginContainer input[type=email], .loginContainer input[type=password] {
   width: 100%;
   padding: 15px;
-  margin: 5px 0 22px 0;
+  margin: 5px 0 12px 0;
   display: inline-block;
-  border: none;
+  border: 1px solid lightgray;
   background: #f1f1f1;
 }
 
@@ -66,14 +66,52 @@ hr {
     justify-content: center;
 }
 
-
-@media only screen and (max-width: 600px){
+@media only screen and (max-width: 700px) and (min-width: 400px) {
   .signinbtn{
     width:100%;
     font-size: 12px;
   }
   .loginContainer{
     width: 100%; 
+    margin-top: 80px;
   }
 
 }
+
+@media only screen and (max-width: 800px) and (min-width: 400px) {
+  .signinbtn{
+    width:100%;
+    font-size: 12px;
+  }
+  .loginContainer{
+    width: 100%; 
+    margin-top: 100px;
+  }
+
+}
+
+@media only screen and (max-width: 400px) and (min-width: 300px) {
+  .signinbtn{
+    width:100%;
+    font-size: 12px;
+  }
+  .loginContainer{
+    width: 100%; 
+    margin-top: 50px;
+  }
+
+}
+
+
+/* 
+@media only screen and (min-width: 800px){
+  .signinbtn{
+    width:100%;
+    font-size: 12px;
+  }
+  .loginContainer{
+    width: 80%; 
+    margin-top: 60px;
+  }
+
+} */

@@ -16,21 +16,18 @@ class SignUp extends React.Component {
             passwordError: '',
             pswrepeat: '',
             pswrepeatError: '',
+            alert:false,
             userList: []
         }
 
-        this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.getAllUsers = this.getAllUsers.bind(this)
+        this.getAllUsers = this.getAllUsers.bind(this);
+        this.setEmail = this.setEmail.bind(this)
+        this.setPassword = this.setPassword.bind(this)
+        this.setConfirmPassword = this.setConfirmPassword.bind(this)
     }
 
-    handleChange(event) {
-        this.setState({
-            [event.target.name]: event.target.value
-        })
-    }
-
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this.getAllUsers()
     }
 
@@ -43,14 +40,6 @@ class SignUp extends React.Component {
             emailError = "Email is required"
         }
 
-        if (this.state.email !== undefined) {
-            let lastAtPos = this.state.email.lastIndexOf('@');
-            let lastDotPos = this.state.email.lastIndexOf('.');
-            if (!(lastAtPos < lastDotPos && lastAtPos > 0 && this.state.email.indexOf('@@') === -1 && lastDotPos > 2 && (this.state.email.length - lastDotPos) > 2)) {
-                emailError = "Email is Invalid"
-            }
-        }
-
         if (!this.state.password) {
             passwordError = "password is required"
         }
@@ -59,22 +48,76 @@ class SignUp extends React.Component {
             pswrepeatError = "Confirm password is required"
         }
 
-        if (this.state.password !== undefined && this.state.pswrepeat !== undefined) {
-            if (this.state.password !== this.state.pswrepeat) {
-                pswrepeatError = "Passwords dont match"
-            }
-        }
-
         if (emailError || passwordError || pswrepeatError) {
             this.setState({ emailError, passwordError, pswrepeatError })
             return false;
         }
 
         return true;
+    }
 
+    setEmail(e) {
+        let emailError = "";
+        this.setState({
+            email: e.target.value
+        }, () => {
+            if (this.state.email === "") {
+                emailError = "Email is required"
+            }
+            if (this.state.email !== "") {
+                let lastAtPos = this.state.email.lastIndexOf('@');
+                let lastDotPos = this.state.email.lastIndexOf('.');
+                let length = this.state.email.length;
+                if (!(lastAtPos < lastDotPos && lastAtPos > 0 && this.state.email.indexOf('@@') === -1 && lastDotPos > 2 && (lastDotPos - lastAtPos) > 2 && (length - lastDotPos) > 2)) {
+                    emailError = "Email is Invalid"
+                }
+            }
+            if (emailError) {
+                this.setState({ emailError })
+            }
+        })
+        this.setState({
+            emailError: ""
+        })
 
     }
 
+    setPassword(e) {
+        let passwordError = "";
+        this.setState({
+            password: e.target.value
+        }, () => {
+            if (this.state.password === "") {
+                passwordError = "password is required"
+            }
+            if (this.state.password !== "" && this.state.password.length < 5) {
+                passwordError = "password length must be greater than 5"
+            }
+            if (passwordError) {
+                this.setState({ passwordError })
+            }
+        })
+        this.setState({
+            passwordError: ""
+        })
+    }
+    
+    setConfirmPassword(e){
+        let pswrepeatError = "";
+        this.setState({
+            pswrepeat: e.target.value
+        }, () => {
+            if (this.state.password !== this.state.pswrepeat) {
+                pswrepeatError = "password doesn't match"
+            }
+            if (pswrepeatError) {
+                this.setState({ pswrepeatError })
+            }
+        })
+        this.setState({
+            pswrepeatError: ""
+        })
+    }
     async getAllUsers() {
         await axios.get("http://localhost:3001/users").then((responseData) => {
             this.setState({
@@ -100,14 +143,15 @@ class SignUp extends React.Component {
             if (this.state.userList.length !== 0) {
                 for (var i = 0; i < this.state.userList.length; i++) {
                     if (userDetails.email === this.state.userList[i].email) {
-                        alert("user has been registered already")
+                        this.setState({
+                            alert : true
+                        })
                         flag = 1;
 
                     }
                 }
                 if (i === this.state.userList.length && flag !== 1) {
                     axios.post("http://localhost:3001/users", userDetails).then((data) => {
-                        console.log("new", data)
                         this.props.history.push('/login')
                     })
                 }
@@ -124,37 +168,45 @@ class SignUp extends React.Component {
         return (
             <div className="signupBackdrop">
                 <form className="signupContainer">
-                    <h1>Sign Up</h1>
+                    <h3>Sign Up</h3>
                     <hr></hr>
+                    {this.state.alert ? 
+                        <div class="w3-panel w3-red w3-display-container">
+                        <p>User Registered Already</p>
+                      </div> 
+                    : ("") }
                     <label><b>Email</b></label>
                     <input
                         type="email"
                         placeholder="Enter email"
                         name="email"
-                        onChange={this.handleChange}
+                        onChange={this.setEmail}
+                        id="email"
                         required
                     />
-                    <p style={{ fontSize: "12", color: 'red' }}>{this.state.emailError}</p>
+                    <p style={{ fontSize: "10", color: 'red' }}>{this.state.emailError}</p>
 
                     <label><b>Password</b></label>
                     <input
                         type="password"
                         placeholder="Enter Password"
                         name="password"
-                        onChange={this.handleChange}
+                        onChange={this.setPassword}
+                        id="password"
                         required
                     />
-                    <p style={{ fontSize: "12", color: 'red' }}>{this.state.passwordError}</p>
+                    <p style={{ fontSize: "10", color: 'red' }}>{this.state.passwordError}</p>
 
-                    <label><b>Repeat Password</b></label>
+                    <label><b>Confirm Password</b></label>
                     <input
                         type="password"
-                        placeholder="Repeat Password"
+                        placeholder="Confirm Password"
                         name="pswrepeat"
-                        onChange={this.handleChange}
+                        onChange={this.setConfirmPassword}
+                        id="pswrepeat"
                         required
                     />
-                    <p style={{ fontSize: "12", color: 'red' }}>{this.state.pswrepeatError}</p>
+                    <p style={{ fontSize: "10", color: 'red' }}>{this.state.pswrepeatError}</p>
                     <button type="submit" onClick={this.handleSubmit} className="signupbtn">REGISTER</button>
                     <div className="loginlink">
                         <Link to="/login">Existing  User? Login</Link>

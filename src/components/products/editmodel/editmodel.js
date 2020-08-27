@@ -1,6 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import './editmodel.css'
+import { bindActionCreators } from 'redux';
+import editProduct from '../../../actions/editProduct';
+import { connect } from 'react-redux';
 
 class EditModel extends React.Component {
     constructor(props) {
@@ -21,7 +24,11 @@ class EditModel extends React.Component {
             imageError:'',
             categoryList: []
         }
-        this.handleChange = this.handleChange.bind(this)
+        this.setName = this.setName.bind(this)
+        this.setQuantity = this.setQuantity.bind(this)
+        this.setPrice = this.setPrice.bind(this)
+        this.setCategory = this.setCategory.bind(this)
+        this.setBrand = this.setBrand.bind(this)
         this.handleSave = this.handleSave.bind(this)
         this.getAllCategory = this.getAllCategory.bind(this)
         this.imageHandler = this.imageHandler.bind(this)
@@ -72,20 +79,8 @@ class EditModel extends React.Component {
             quantityError="Quantity is required"
         }
         
-        if(this.state.quantity !== undefined){
-            var pattern = new RegExp(/^[0-9\b]+$/)
-            if(!pattern.test(this.state.quantity)){
-                quantityError="enter number"
-            }
-        }
-        
         if(!this.state.price){
             priceError="Price is required"
-        }
-        if(this.state.price !== undefined){
-            if(!pattern.test(this.state.price)){
-                priceError="enter number"
-            }
         }
         if(!this.state.brand){
             brandError="Brand is required"
@@ -106,6 +101,105 @@ class EditModel extends React.Component {
         return true;
     }
 
+    setName(e){
+        let nameError=""
+        this.setState({
+            name : e.target.value
+        }, () => {
+            if(this.state.name === ""){
+                nameError="Name is required"
+            }
+            if(nameError){
+                this.setState({
+                    nameError
+                })
+            }
+        })
+        this.setState({nameError:""})
+    }
+
+    setPrice(e){
+        let priceError=""
+        this.setState({
+            price : e.target.value
+        }, () => {
+            if(this.state.price === ""){
+                priceError="Price is required"
+            }
+            if(this.state.price !== ""){
+                var pattern = new RegExp(/^[0-9\b]+$/)
+                if(!pattern.test(this.state.price)){
+                    priceError="Price should be a number"
+                }
+            }
+            if(priceError){
+                this.setState({
+                    priceError
+                })
+            }
+        })
+        this.setState({priceError:""})
+    }
+
+    
+    setQuantity(e){
+        let quantityError=""
+        this.setState({
+            quantity : e.target.value
+        }, () => {
+            if(this.state.quantity === ""){
+                quantityError="Quantity is required"
+            }
+            if(this.state.quantity !== ""){
+                var pattern = new RegExp(/^[0-9\b]+$/)
+                if(!pattern.test(this.state.quantity)){
+                    quantityError="Quantity should be a number"
+                }
+            }
+            if(quantityError){
+                this.setState({
+                    quantityError
+                })
+            }
+        })
+        this.setState({quantityError:""})
+    }
+
+    setCategory(e){
+        let categoryError=""
+        this.setState({
+            category : e.target.value
+        },() => {
+            if(this.state.category === ""){
+                categoryError="Category is required"
+            }
+            if(categoryError){
+                this.setState({
+                    categoryError
+                })
+            }
+        })
+        this.setState({categoryError:""})
+    }
+
+    setBrand(e){
+        let brandError=""
+        this.setState({
+            brand : e.target.value
+        }, () => {
+            if(this.state.brand === ""){
+                brandError="Name is required"
+            }
+            if(brandError){
+                this.setState({
+                    brandError
+                })
+            }
+        })
+        this.setState({brandError:""})
+    }
+
+
 
     async handleSave(event) {
         event.preventDefault()
@@ -121,8 +215,9 @@ class EditModel extends React.Component {
         }
         await axios.put(`http://localhost:3002/products/${this.state.id}`,updatedProduct).then((responseData) => {
             console.log(responseData)
+            this.props.history.push('/products')
+            this.props.editProduct(responseData)
         })
-        this.props.history.push('/products')
     }
     }
 
@@ -137,14 +232,6 @@ class EditModel extends React.Component {
             }
         }
         reader.readAsDataURL(e.target.files[0])
-    }
-
-
-
-    handleChange(event) {
-        this.setState({
-            [event.target.name]: event.target.value
-        })
     }
 
 
@@ -169,14 +256,14 @@ class EditModel extends React.Component {
                                 name="name"
                                 placeholder="ENTER NAME"
                                 defaultValue={this.state.name}
-                                onChange={this.handleChange}
+                                onChange={this.setName}
                             />
                              <p style={{ fontSize: "12", color: 'red' }}>{this.state.nameError}</p>
                             <input
                                 type="text"
                                 name="price"
                                 placeholder="ENTER PRICE"
-                                onChange={this.handleChange}
+                                onChange={this.setPrice}
                                 defaultValue={this.state.price}
                             />
                              <p style={{ fontSize: "12", color: 'red' }}>{this.state.priceError}</p>
@@ -184,7 +271,7 @@ class EditModel extends React.Component {
                                 type="text"
                                 name="brand"
                                 placeholder="ENTER BRAND"
-                                onChange={this.handleChange}
+                                onChange={this.setBrand}
                                 defaultValue={this.state.brand}
                             />
                              <p style={{ fontSize: "12", color: 'red' }}>{this.state.brandError}</p>
@@ -192,12 +279,11 @@ class EditModel extends React.Component {
                                 type="text"
                                 name="quantity"
                                 placeholder="ENTER QUANTITY"
-                                onChange={this.handleChange}
+                                onChange={this.setQuantity}
                                 defaultValue={this.state.quantity}
                             />
                              <p style={{ fontSize: "12", color: 'red' }}>{this.state.quantityError}</p>
-                            <select name="category" value={this.state.category} onChange={this.handleChange}>
-                                <option value="default">CHOOSE A CATEGORY</option>
+                            <select name="category" value={this.state.category} onChange={this.setCategory}>
                                 {categoryOption}
                             </select>
                             <p style={{ fontSize: "12", color: 'red' }}>{this.state.categoryError}</p>
@@ -205,7 +291,7 @@ class EditModel extends React.Component {
                     </div>
                     <br></br>
                     <div className="row">
-                        <button type="submit" className="editproduct" onClick={this.handleSave}>SAVE</button>
+                        <button type="submit" data-testid="save" className="editproduct" onClick={this.handleSave}>SAVE</button>
                     </div>
                 </form>
             </div>
@@ -213,4 +299,10 @@ class EditModel extends React.Component {
     }
 }
 
-export default EditModel;
+function mapPropsToState(dispatch){
+    return bindActionCreators({
+        editProduct : editProduct
+    },dispatch)
+}
+
+export default connect(null,mapPropsToState)(EditModel);

@@ -5,6 +5,18 @@
       "password": "gnanam",
       "pswrepeat": "gnanam",
       "id": 5
+    },
+    {
+      "email": "muthupriyavv@gmail.com",
+      "password": "july",
+      "pswrepeat": "july",
+      "id": 6
+    },
+    {
+      "email": "nafiya@gmail.com",
+      "password": "jul",
+      "pswrepeat": "jul",
+      "id": 7
     }
   ]
 }

@@ -13,11 +13,14 @@ class Login extends React.Component {
             emailError: '',
             password: '',
             passwordError: '',
-            userList: []
+            userList: [],
+            alert:false
         }
-        this.handleChange = this.handleChange.bind(this)
+        this.setEmail = this.setEmail.bind(this)
+        this.setPassword = this.setPassword.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.getAllUsers = this.getAllUsers.bind(this)
+        this.validate = this.validate.bind(this)
     }
 
     UNSAFE_componentWillMount() {
@@ -33,14 +36,6 @@ class Login extends React.Component {
         console.log(this.state.userList.length)
     }
 
-
-    handleChange(event) {
-        this.setState({
-            [event.target.name]: event.target.value
-        })
-
-    }
-
     validate() {
         let emailError = "";
         let passwordError = "";
@@ -49,25 +44,61 @@ class Login extends React.Component {
             emailError = "Email is required"
         }
 
-        if (this.state.email !== undefined) {
-            let lastAtPos = this.state.email.lastIndexOf('@');
-            let lastDotPos = this.state.email.lastIndexOf('.');
-            if (!(lastAtPos < lastDotPos && lastAtPos > 0 && this.state.email.indexOf('@@') === -1 && lastDotPos > 2 && (this.state.email.length - lastDotPos) > 2)) {
-                emailError = "Email is Invalid"
-            }
-        }
-
         if (!this.state.password) {
             passwordError = "Password is required"
         }
 
         if (emailError || passwordError) {
             this.setState({ emailError, passwordError })
-            return false;
+            return false
         }
-
-        return true;
+        return true
     }
+
+    setEmail(e) {
+        let emailError = "";
+        this.setState({
+            email: e.target.value
+        }, () => {
+            if (this.state.email === "") {
+                emailError = "Email is required"
+            }
+            if (this.state.email !== "") {
+                let lastAtPos = this.state.email.lastIndexOf('@');
+                let lastDotPos = this.state.email.lastIndexOf('.');
+                let length = this.state.email.length;
+                if (!(lastAtPos < lastDotPos && lastAtPos > 0 && this.state.email.indexOf('@@') === -1 && lastDotPos > 2 && (lastDotPos - lastAtPos) > 2 && (length - lastDotPos) > 2)) {
+                    emailError = "Email is Invalid"
+                }
+            }
+            if (emailError) {
+                this.setState({ emailError })
+            }
+        })
+        this.setState({
+            emailError: ""
+        })
+
+    }
+
+    setPassword(e) {
+        let passwordError = "";
+        this.setState({
+            password: e.target.value
+        }, () => {
+            if (this.state.password === "") {
+                passwordError = "password is required"
+            }
+            if (passwordError) {
+                this.setState({ passwordError })
+            }
+        })
+        this.setState({
+            passwordError: ""
+        })
+    }
+
+
 
     handleSubmit(event) {
         event.preventDefault();
@@ -86,7 +117,9 @@ class Login extends React.Component {
                 }
             }
             if (i === this.state.userList.length) {
-                alert('wrong credentials')
+               this.setState({
+                    alert:true
+               })
 
             }
         }
@@ -96,31 +129,42 @@ class Login extends React.Component {
         return (
             <div className="loginBackdrop">
                 <form className="loginContainer">
-                    <h1 style={{ textAlign: "center" }}>Login</h1>
+                    <h3 style={{ textAlign: "center" }}>Login</h3>
                     <hr></hr>
-                    <label><b>Email</b></label>
-                    <input
-                        type="email"
-                        placeholder="Enter email"
-                        name="email"
-                        onChange={this.handleChange}
-                        required
-                    />
-                    <p style={{ fontSize: "12", color: 'red' }}>{this.state.emailError}</p>
+                    {this.state.alert ? 
+                        <div class="w3-panel w3-red w3-display-container">
+                        <p>Wrong Credentials</p>
+                      </div> 
+                    : ("") }
+                    <div>
+                        <label><b>Email</b></label>
+                        <input
+                            type="email"
+                            placeholder="Enter email"
+                            name="email"
+                            onChange={this.setEmail}
+                            id="email"
+                            required
+                        />
+                        <p style={{ color: "red" }}>{this.state.emailError}</p>
+                    </div>
 
-                    <label><b>Password</b></label>
-                    <input
-                        type="password"
-                        placeholder="Enter password"
-                        name="password"
-                        onChange={this.handleChange}
-                        errortext={this.state.passwordError}
-                        required
-                    />
-                    <p style={{ fontSize: "12", color: 'red' }}>{this.state.passwordError}</p>
+
+                    <div>
+                        <label><b>Password</b></label>
+                        <input
+                            type="password"
+                            placeholder="Enter password"
+                            name="password"
+                            id="password"
+                            onChange={this.setPassword}
+                            required
+                        />
+                        <p style={{ color: "red" }}>{this.state.passwordError}</p>
+                    </div>
 
                     <div className="clearfix">
-                        <button type="submit" onClick={this.handleSubmit}
+                        <button type="submit" onClick={this.handleSubmit} data-testid="login"
                             className="signinbtn">LOGIN</button>
                         <br>
                         </br>
